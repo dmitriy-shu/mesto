@@ -1,0 +1,6 @@
+.profile__add-button-image {
+  width: 22px;
+  height: 22px;
+  background-image: url(../../../image/add-button.svg);
+  margin: 0 auto;
+}

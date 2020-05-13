@@ -1,0 +1,12 @@
+.profile__card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 620px) {
+  .profile__card {
+    display: block;
+    text-align: center;
+  }
+}

@@ -1,0 +1,28 @@
+.card-grid {
+  max-width: 882px;
+  margin: 0 auto;
+  padding-bottom: 66px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px 18px;
+  justify-items: center;
+}
+
+@media (max-width: 920px) {
+  .card-grid {
+    max-width: 582px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px 18px;
+  }
+}
+
+@media (max-width: 620px) {
+  .card-grid {
+    max-width: 582px;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 20px 18px;
+    width:calc(100% - 38px);
+    margin: 0 auto;
+    padding-bottom: 45px;
+  }
+}
