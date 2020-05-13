@@ -1,11 +1,11 @@
-let editButton = document.querySelector('.profile__edit-button');
-let closeButton = document.querySelector('.popup__icon-close');
-let popup = document.querySelector('.popup');
+const editButton = document.querySelector('.profile__edit-button');
+const closeButton = document.querySelector('.popup__icon-close');
+const popup = document.querySelector('.popup');
 
-let profileName = document.querySelector('.profile__title');
-let profileAbout = document.querySelector('.profile__subtitle');
-let popupName = document.querySelector('.popup__input-name');
-let popupAbout = document.querySelector('.popup__input-about');
+const profileName = document.querySelector('.profile__title');
+const profileAbout = document.querySelector('.profile__subtitle');
+const popupName = document.querySelector('.popup__input-name');
+const popupAbout = document.querySelector('.popup__input-about');
 
 // при нажатии на кнопку edit открываем окно popup и подставляем в его формы значения из элемента profile
 function popupOpened() {
