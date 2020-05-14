@@ -4,8 +4,8 @@
   border: 1px solid #fff;
   background-color: transparent;
   cursor: pointer;
-  margin: 36px 0 0 0;
   position: relative;
+  transform: translate(0, -13px);
 }
 
 .profile__edit-button::before {
@@ -30,6 +30,7 @@
     width: 18px;
     height: 18px;
     margin: 31px 0 0 0;
+    transform: translate(0, -6px);
   }
   .profile__edit-button::before {
     width: 7.5px;

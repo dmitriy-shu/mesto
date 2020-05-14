@@ -2,12 +2,15 @@
   font-size: 18px;
   line-height: 1.2;
   margin: 5px 0 0 0;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 620px) {
   .profile__subtitle {
     font-size: 14px;
     line-height: 1.2;
-    margin: 13px 0 0 0;
+    margin: 13px auto 0;
   }
 }
