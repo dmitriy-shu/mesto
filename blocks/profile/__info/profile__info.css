@@ -1,10 +1,11 @@
 .profile__info {
   margin-right: 17px;
-  text-align: center;
+  text-align: start;
 }
 
 @media (max-width: 620px) {
   .profile__info {
     margin-right: 0;
+    text-align: center;
   }
 }

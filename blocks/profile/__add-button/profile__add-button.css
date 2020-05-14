@@ -5,7 +5,21 @@
   background-color: #000;
   cursor: pointer;
   margin: 34px 0 0 0;
+  position: relative;
 }
+
+.profile__add-button::before {
+  content: '';
+  width: 22px;
+  height: 22px;
+  background-image: url(../../../image/add-button.svg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -11px;
+  margin-left: -11px;
+}
+
 
 .profile__add-button:hover {
   opacity: 30%;
@@ -15,5 +29,13 @@
 @media (max-width: 620px) {
   .profile__add-button {
     width: 282px;
+  }
+
+  .profile__add-button::before {
+    width: 16px;
+    height: 16px;
+    background-image: url(../../../image/add-button1.svg);
+    margin-top: -8px;
+    margin-left: -8px;
   }
 }
