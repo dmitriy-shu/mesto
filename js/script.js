@@ -9,6 +9,9 @@ const popupAbout = document.querySelector('.popup__input-about');
 
 const formElement = document.querySelector('.popup__container');
 
+const card = document.querySelector('.card-grid');
+const itemCardTemplate = document.querySelector('.card-template').content;
+
 
 function popupOpened() {
   popup.classList.add('popup_opened');
@@ -32,5 +35,52 @@ function formSubmitHandler(evt) {
   popup.classList.remove('popup_opened');
 };
 formElement.addEventListener('submit', formSubmitHandler);
+
+//  Добавляем начальные карточки
+
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+
+function renderCardTemplate(item) {
+
+  const cardTemplate = itemCardTemplate.cloneNode(true);
+  cardTemplate.querySelector('.card__title').textContent = item.name;
+  cardTemplate.querySelector('.card__image').setAttribute('src', item.link);
+  cardTemplate.querySelector('.card__image').setAttribute('alt', item.name)
+  card.append(cardTemplate);
+}
+
+function render() {
+  initialCards.forEach(renderCardTemplate)
+}
+
+
+
+render()
 
 

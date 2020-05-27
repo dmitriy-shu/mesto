@@ -2,6 +2,7 @@
 @import url(./__info/card__info.css);
 @import url(./__title/card__title.css);
 @import url(./__button-like/card__button-like.css);
+@import url(./__button-delet/card__button-delet.css);
 
 
 
@@ -10,5 +11,6 @@
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
 }
 
