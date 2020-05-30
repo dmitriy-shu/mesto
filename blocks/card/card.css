@@ -3,6 +3,7 @@
 @import url(./__title/card__title.css);
 @import url(./__button-like/card__button-like.css);
 @import url(./__button-delet/card__button-delet.css);
+@import url(./__button-like/_active/card__button-like_active.css);
 
 
 
