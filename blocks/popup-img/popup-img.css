@@ -12,5 +12,10 @@
   background-color: rgba(0, 0, 0, 0.9);
   top: 0;
   left: 0;
-  display: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
 }

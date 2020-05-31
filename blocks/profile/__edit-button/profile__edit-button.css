@@ -6,6 +6,7 @@
   cursor: pointer;
   position: relative;
   transform: translate(0, -13px);
+  transition: opacity .3s ease;
 }
 
 .profile__edit-button::before {
