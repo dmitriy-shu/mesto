@@ -15,7 +15,7 @@ const popupImgImage = document.querySelector('.popup-img__image');
 const popupImgTitle = document.querySelector('.popup-img__title');
 const closeButtonPopupImg = document.querySelector('.popup-img__icon-close');
 const formElement = document.querySelector('.popup__container');
-const card = document.querySelector('.card-grid');
+const cardsContainer = document.querySelector('.card-grid');
 const itemCardTemplate = document.querySelector('.card-template').content;
 const formAdd = document.querySelector('.popup-add__container');
 
@@ -77,7 +77,13 @@ function formSubmitHandler(evt) {
 formElement.addEventListener('submit', formSubmitHandler);
 //--------------------------------------------------------------------------------------
 
-//-----------------------------общая функция добавление карточки со слушателями
+//------------------------------функция добавления карточки на страницу (рендер карточки)
+function renderCard(cardTemplate, cardsContainer) {
+  cardsContainer.prepend(cardTemplate);
+}
+//---------------------------------------------------------------------------------------
+
+//----------------------------- функция создания карточки со слушателями
 function getCard(name, link) {
   const cardTemplate = itemCardTemplate.cloneNode(true);
   cardTemplate.querySelector('.card__title').textContent = name;
@@ -86,7 +92,8 @@ function getCard(name, link) {
 
   addTemplateEvent(cardTemplate); // вызываем функцию добавления слушателей лайк, удалить, фото
 
-  card.prepend(cardTemplate);
+  return cardTemplate;
+
 }
 //--------------------------------------------------------------------------------------------
 
@@ -122,8 +129,8 @@ function renderCardTemplate(item) {
   const name = item.name;
   const link = item.link;
 
-  getCard(name, link);
-
+  const cardTemplate = getCard(name, link);
+  renderCard(cardTemplate, cardsContainer);
 };
 
 initialCards.forEach(renderCardTemplate)
@@ -148,7 +155,8 @@ function renderCardUser(evt) {              // функция добавлени
 
   if (inputPlace.value && inputLink.value) {        //не допускаем пустых строк в форме
 
-    getCard(inputPlace.value, inputLink.value);     //функция добавления слушателей в карточку
+    const cardTemplate = getCard(inputPlace.value, inputLink.value);     //функция создать карточку
+    renderCard(cardTemplate, cardsContainer);                           //функция добавляет карточку
     inputPlace.value = '';  //обнуляем
     inputLink.value = '';   //обнуляем
 
