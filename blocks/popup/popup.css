@@ -4,6 +4,12 @@
 @import url(../popup/__input-name/popup__input-name.css);
 @import url(../popup/__input-about/popup__input-about.css);
 @import url(../popup/__button/popup__button.css);
+@import url(../popup/__input-name/_type/popup__input-name_type_error.css);
+@import url(../popup/__input-about/_type/popup__input-about_type_error.css);
+@import url(../popup/__input-name-error/popup__input-name-error.css);
+@import url(../popup/__input-about-error/popup__input-about-error.css);
+
+@import url(../popup/__input/popup__input.css);
 
 
 

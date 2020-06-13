@@ -1,0 +1,8 @@
+.popup-add__input-link-error {
+  height: 43px;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #FF0000;
+  display: inline-block;
+  margin: 0;
+}

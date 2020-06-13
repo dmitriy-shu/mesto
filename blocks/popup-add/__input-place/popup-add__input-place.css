@@ -1,9 +1,12 @@
 .popup-add__input-place {
     width: 100%;
     height: 27px;
-    margin: 0 0 48px 0;
     border: none;
     border-bottom:1px solid #c4c4c4;
+  }
+
+  .popup-add__input-place:focus {
+    outline: none;
   }
   
   

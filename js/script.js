@@ -51,35 +51,48 @@ const initialCards = [
 
 //------------------------------------  Форма редактирования профиля -------------------------
 
+//функция закрытия попап при клике на оверлае
+function toClosePopupByClickOwerlay(evt) {
+  if (evt.target.classList.contains('popup')) {      //проверка клика на оверлее
+    popupClose();  //функция закрытия 
+  }
+};
+//функция закрытия попап при клике на esc
+function toClosePopupByClickEsc(evt) {
+  if (evt.key === 'Escape') {                         //проверка на эскейп
+    popupClose();
+  }
+};
+
 // открыть
 function popupOpened() {
   popup.classList.add('popup_opened');
   popupName.value = profileName.textContent;
   popupAbout.value = profileAbout.textContent;
+
+  //слушатель на закрытие формы кликом на оверлей
+  popup.addEventListener('click', toClosePopupByClickOwerlay);
+
+  //слушатель на закрытие формы при нажатие esc
+  document.addEventListener('keydown', toClosePopupByClickEsc);
 };
 editButton.addEventListener('click', popupOpened);
 
 // закрыть
 function popupClose() {
   popup.classList.remove('popup_opened');
+  document.querySelector('.popup__input-name-error').textContent = '';
+  document.querySelector('.popup__input-about-error').textContent = '';
+  popupName.classList.remove('popup__input_type_error');
+  popupAbout.classList.remove('popup__input_type_error');
+  //снимаем слушатели на owerlay и esc
+  popup.removeEventListener('click', toClosePopupByClickOwerlay);
+  document.removeEventListener('keydown', toClosePopupByClickEsc);
+
 };
 closeButton.addEventListener('click', popupClose);
 
-// закрытие формы кликом на оверлей
 
-popup.addEventListener('click', (evt) => {               // вешаем слушатель на клик оверлей
-  if (evt.target.classList.contains('popup')) {      //проверка клика на оверлее
-    popupClose();  //функция закрытия 
-  }
-});
-
-// закрытие формы при нажатие esc
-
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    popupClose()
-  }
-});
 
 
 // редактировать профиль
@@ -104,7 +117,7 @@ function getCard(name, link) {
   const cardTemplate = itemCardTemplate.cloneNode(true);
   cardTemplate.querySelector('.card__title').textContent = name;
   cardTemplate.querySelector('.card__image').setAttribute('src', link);
-  cardTemplate.querySelector('.card__image').setAttribute('alt', 'Фотография ' + name);
+  cardTemplate.querySelector('.card__image').setAttribute('alt', name);
 
   addTemplateEvent(cardTemplate); // вызываем функцию добавления слушателей лайк, удалить, фото
 
@@ -152,45 +165,56 @@ initialCards.forEach(renderCardTemplate)
 //-----------------------------------------------------------------------------------------
 
 //------------------------------  Форма добавления карточек -----------------------------------------------------------
+
+//функция закрытия попап при клике на оверлае
+function toClosePopupAddByClickOwerlay(evt) {
+  if (evt.target.classList.contains('popup-add_opened')) {      //проверка клика на оверлее
+    popupAddClose();  //функция закрытия 
+  }
+};
+//функция закрытия попап при клике на esc
+function toClosePopupAddByClickEsc(evt) {
+  if (evt.key === 'Escape') {                         //проверка на эскейп
+    popupAddClose();
+  }
+};
 // открыть
 function popupAddOpened() {
   popupAdd.classList.add('popup-add_opened');
+
+  //слушатель на закрытие кликом на оверлей
+  popupAdd.addEventListener('click', toClosePopupAddByClickOwerlay);
+
+  //слушатель на закрытие при нажатие esc
+  document.addEventListener('keydown', toClosePopupAddByClickEsc);
 };
 addButton.addEventListener('click', popupAddOpened);
 
 // закрыть
 function popupAddClose() {
   popupAdd.classList.remove('popup-add_opened');
+  inputPlace.value = '';  //обнуляем
+  inputLink.value = '';   //обнуляем
+  document.querySelector('.popup-add__input-place-error').textContent = '';
+  document.querySelector('.popup-add__input-link-error').textContent = '';
+  inputPlace.classList.remove('popup__input_type_error');
+  inputLink.classList.remove('popup__input_type_error');
+
 };
 closeButtonPopupAdd.addEventListener('click', popupAddClose);
 
-//закрытие кликом на оверлей
-popupAdd.addEventListener('click', (evt) => {               // вешаем слушатель на клик оверлей
-  if (evt.target.classList.contains('popup-add')) {      //проверка клика на оверлее
-    popupAddClose();  //функция закрытия 
-  }
-});
 
-//закрытие при нажатие esc
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    popupAddClose()
-  }
-});
 
 //добавить карточку через форму
 function renderCardUser(evt) {              // функция добавления карточки через форму
   evt.preventDefault();
 
-  if (inputPlace.value && inputLink.value) {        //не допускаем пустых строк в форме
+  const cardTemplate = getCard(inputPlace.value, inputLink.value);     //функция создать карточку
+  renderCard(cardTemplate, cardsContainer);                           //функция добавляет карточку
 
-    const cardTemplate = getCard(inputPlace.value, inputLink.value);     //функция создать карточку
-    renderCard(cardTemplate, cardsContainer);                           //функция добавляет карточку
-    inputPlace.value = '';  //обнуляем
-    inputLink.value = '';   //обнуляем
 
-    popupAddClose();  //закрываем форму
-  };
+  popupAddClose();  //закрываем форму
+
 };
 
 formAdd.addEventListener('submit', renderCardUser);     // слушатель формы добавления карточек

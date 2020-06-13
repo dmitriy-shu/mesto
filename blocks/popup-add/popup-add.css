@@ -4,6 +4,10 @@
 @import url(../popup-add/__input-place/popup-add__input-place.css);
 @import url(../popup-add/__input-link/popup-add__input-link.css);
 @import url(../popup-add/__button/popup-add__button.css);
+@import url(../popup-add/__input-place/_type/popup-add__input-place_type_error.css);
+@import url(../popup-add/__input-place-error/popup-add__input-place-error.css);
+@import url(../popup-add/__input-link/_type/popup-add__input-link_type_error.css);
+@import url(../popup-add/__input-link-error/popup-add__input-link-error.css);
 
 
 
