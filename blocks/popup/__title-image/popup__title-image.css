@@ -1,4 +1,4 @@
-.popup-img__title {
+.popup__title-image {
   font-size: 12px;
   line-height: 1.2;
   text-align: start;
@@ -6,4 +6,3 @@
   bottom: -30px;
   left: 0;
 }
-

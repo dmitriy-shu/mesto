@@ -1,4 +1,4 @@
-.popup-add__input-place-error {
+.popup__input-place-error {
   height: 24px;
   font-size: 12px;
   line-height: 1.2;
@@ -6,4 +6,3 @@
   display: inline-block;
   margin: 0;
 }
-

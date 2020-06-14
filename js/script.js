@@ -3,21 +3,21 @@ const profileName = document.querySelector('.profile__title');
 const profileAbout = document.querySelector('.profile__subtitle');
 const addButton = document.querySelector('.profile__add-button');
 const popup = document.querySelector('.popup');
-const closeButton = document.querySelector('.popup__icon-close');
-const popupName = document.querySelector('.popup__input-name');
-const popupAbout = document.querySelector('.popup__input-about');
-const popupAdd = document.querySelector('.popup-add');
-const closeButtonPopupAdd = document.querySelector('.popup-add__icon-close')
-const inputPlace = document.querySelector('.popup-add__input-place');
-const inputLink = document.querySelector('.popup-add__input-link');
-const popupImg = document.querySelector('.popup-img');
-const popupImgImage = document.querySelector('.popup-img__image');
-const popupImgTitle = document.querySelector('.popup-img__title');
-const closeButtonPopupImg = document.querySelector('.popup-img__icon-close');
-const formElement = document.querySelector('.popup__container');
+const closeButton = document.querySelector('.popup__icon-close_type_edit');
+const popupName = document.querySelector('.popup__input_type_name');
+const popupAbout = document.querySelector('.popup__input_type_about');
+const popupAdd = document.querySelector('.popup_type_add');
+const closeButtonPopupAdd = document.querySelector('.popup__icon-close_type_add')
+const inputPlace = document.querySelector('.popup__input_type_place');
+const inputLink = document.querySelector('.popup__input_type_link');
+const popupImg = document.querySelector('.popup_type_img');
+const popupImgImage = document.querySelector('.popup__image');
+const popupImgTitle = document.querySelector('.popup__title-image');
+const closeButtonPopupImg = document.querySelector('.popup__icon-close_type_img');
+const formElement = document.querySelector('.popup__form');
 const cardsContainer = document.querySelector('.card-grid');
 const itemCardTemplate = document.querySelector('.card-template').content;
-const formAdd = document.querySelector('.popup-add__container');
+const formAdd = document.querySelector('.popup__form_type_add');
 
 //----------------------------------- исходные данные начальных карточек
 
@@ -168,7 +168,7 @@ initialCards.forEach(renderCardTemplate)
 
 //функция закрытия попап при клике на оверлае
 function toClosePopupAddByClickOwerlay(evt) {
-  if (evt.target.classList.contains('popup-add_opened')) {      //проверка клика на оверлее
+  if (evt.target.classList.contains('popup_opened')) {      //проверка клика на оверлее
     popupAddClose();  //функция закрытия 
   }
 };
@@ -180,7 +180,7 @@ function toClosePopupAddByClickEsc(evt) {
 };
 // открыть
 function popupAddOpened() {
-  popupAdd.classList.add('popup-add_opened');
+  popupAdd.classList.add('popup_opened');
 
   //слушатель на закрытие кликом на оверлей
   popupAdd.addEventListener('click', toClosePopupAddByClickOwerlay);
@@ -192,14 +192,16 @@ addButton.addEventListener('click', popupAddOpened);
 
 // закрыть
 function popupAddClose() {
-  popupAdd.classList.remove('popup-add_opened');
+  popupAdd.classList.remove('popup_opened');
   inputPlace.value = '';  //обнуляем
   inputLink.value = '';   //обнуляем
-  document.querySelector('.popup-add__input-place-error').textContent = '';
-  document.querySelector('.popup-add__input-link-error').textContent = '';
+  document.querySelector('.popup__input-place-error').textContent = '';
+  document.querySelector('.popup__input-link-error').textContent = '';
   inputPlace.classList.remove('popup__input_type_error');
   inputLink.classList.remove('popup__input_type_error');
-
+  //снимаем слушатели на owerlay и esc
+  popupAdd.addEventListener('click', toClosePopupAddByClickOwerlay);
+  document.addEventListener('keydown', toClosePopupAddByClickEsc);
 };
 closeButtonPopupAdd.addEventListener('click', popupAddClose);
 
@@ -224,7 +226,7 @@ formAdd.addEventListener('submit', renderCardUser);     // слушатель ф
 
 //открытие
 function popupImgOpened(item) {                     //функция открытия popup
-  popupImg.classList.add('popup-img_opened'); //добавляем класс "открытия" popup
+  popupImg.classList.add('popup_opened'); //добавляем класс "открытия" popup
   const link = item.getAttribute('src');  //получаем ссылку кликнутой картинки
   popupImgImage.setAttribute('src', link);  //передаем ссылку в popup с картинкой
 
@@ -234,13 +236,13 @@ function popupImgOpened(item) {                     //функция откры�
 
 //закрытие
 function popupImgClose() {                              //функция закрытия popup
-  popupImg.classList.remove('popup-img_opened');    //удаляем класс "открытия" popup
+  popupImg.classList.remove('popup_opened');    //удаляем класс "открытия" popup
 };
 closeButtonPopupImg.addEventListener('click', popupImgClose); // вешаем слушатель на клик кнопки закрытия popup с картинкой
 
 //закрытие кликом на оверлей
 popupImg.addEventListener('click', (evt) => {     // вешаем слушатель на клик оверлей
-  if (evt.target.classList.contains('popup-img')) {      //проверка клика на оверлее
+  if (evt.target.classList.contains('popup_type_img')) {      //проверка клика на оверлее
     popupImgClose();  //функция закрытия 
   }
 });

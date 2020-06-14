@@ -1,4 +1,4 @@
-.popup-add__container {
+.popup__form {
   box-sizing: border-box;
   max-width: 430px;
   min-height: 330px;
@@ -9,9 +9,8 @@
   position: relative;
 }
 
-
 @media (max-width: 620px) {
-  .popup-add__container {
+  .popup__form {
     width: calc(100% - 60px);
   }
 }
