@@ -7,12 +7,12 @@ function enableValidation(obj) {
     //находим все её импуты
     const inputElements = Array.from(formElement.querySelectorAll(obj.inputSelector));
     //находим кнопки(сабмит)
-    const submitButton = formElement.querySelector('.popup__button');
+    const submitButton = formElement.querySelector(obj.submitButtonSelector);
 
     //для каждого импута
-    inputElements.forEach(input => {
+    inputElements.forEach(inputElement => {
       //добавляем слушатель на событие ввода с клавиатуры  
-      input.addEventListener('input', evt => handleInput(evt, obj))
+      inputElement.addEventListener('input', () => handleInput(inputElement, obj))
     });
     formElement.addEventListener('input', () => handleFormInput(formElement, submitButton, obj.inactiveButtonClass))
 
@@ -22,19 +22,28 @@ function enableValidation(obj) {
     });
   });
 };
-//---------------------------------функция управления текстом и визуализации ошибок 
-function handleInput(evt, obj) {
-  const input = evt.target;
+//------------------------функция показа ошибок
+function showInputError(inputElement, obj) {
   //находим span в который будем добавлять текст ошибки
-  const error = document.querySelector(`#${input.id}-error`);
-  if (input.checkValidity()) {
+  const errorElement = document.querySelector(`#${inputElement.id}-error`);
+  errorElement.textContent = ''; //очищаем текст ошибки
+  inputElement.classList.remove(obj.inputErrorClass);  //удаляем красное подчеркивание
+};
+//------------------------функция скрытия ошибок
+function hideInputError(inputElement, obj) {
+  //находим span в который будем добавлять текст ошибки
+  const errorElement = document.querySelector(`#${inputElement.id}-error`);
+  errorElement.textContent = inputElement.validationMessage;  //добавляем текст ошибки
+  inputElement.classList.add(obj.inputErrorClass);   //добавляем красное подчеркивание
+};
+//---------------------------------функция управления текстом и визуализации ошибок 
+function handleInput(inputElement, obj) {
+  if (inputElement.checkValidity()) {
     //ввод валиден
-    error.textContent = ''; //очищаем текст ошибки
-    input.classList.remove(obj.inputErrorClass);  //удаляем красное подчеркивание
+    showInputError(inputElement, obj) //показываем ошибку
   } else {
     //ввод не валиден
-    error.textContent = input.validationMessage;  //добавляем текст ошибки
-    input.classList.add(obj.inputErrorClass);   //добавляем красное подчеркивание
+    hideInputError(inputElement, obj) //скрываем ошибку
   }
 };
 //----------------------------функция управления кнопкой формы
