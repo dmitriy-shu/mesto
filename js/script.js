@@ -18,6 +18,8 @@ const formElement = document.querySelector('.popup__form');
 const cardsContainer = document.querySelector('.card-grid');
 const itemCardTemplate = document.querySelector('.card-template').content;
 const formAdd = document.querySelector('.popup__form_type_add');
+const popupButton = document.querySelector('.popup__button');
+const popupButtonAdd = document.querySelector('.popup__button_type_add')
 
 //----------------------------------- исходные данные начальных карточек
 
@@ -47,53 +49,79 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+//-------------------------функция закрытия попапов
+function closePopup(popup) {
 
-
-//------------------------------------  Форма редактирования профиля -------------------------
+  popup.classList.remove('popup_opened');
+  reset();
+  //снимаем слушатели на owerlay и esc
+  popup.removeEventListener('mousedown', toClosePopupByClickOwerlay);
+  document.removeEventListener('keydown', closeEventOnEscape);
+};
+//-------------------------функция открытия попапов
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  //слушатель на закрытие формы кликом на оверлей
+  popup.addEventListener('mousedown', toClosePopupByClickOwerlay);
+  //слушатель на закрытие формы при нажатие esc
+  document.addEventListener('keydown', closeEventOnEscape = (evt) => {
+    toClosePopupByClickEsc(evt, popup)
+  });
+};
 
 //функция закрытия попап при клике на оверлае
 function toClosePopupByClickOwerlay(evt) {
+  const popup = evt.target;
   if (evt.target.classList.contains('popup')) {      //проверка клика на оверлее
-    popupClose();  //функция закрытия 
+    closePopup(popup);  //функция закрытия 
   }
 };
 //функция закрытия попап при клике на esc
-function toClosePopupByClickEsc(evt) {
+function toClosePopupByClickEsc(evt, popup) {
   if (evt.key === 'Escape') {                         //проверка на эскейп
-    popupClose();
+    closePopup(popup);
   }
 };
-
-// открыть
-function popupOpened() {
-  popup.classList.add('popup_opened');
-  popupName.value = profileName.textContent;
-  popupAbout.value = profileAbout.textContent;
-
-  //слушатель на закрытие формы кликом на оверлей
-  popup.addEventListener('click', toClosePopupByClickOwerlay);
-
-  //слушатель на закрытие формы при нажатие esc
-  document.addEventListener('keydown', toClosePopupByClickEsc);
-};
-editButton.addEventListener('click', popupOpened);
-
-// закрыть
-function popupClose() {
-  popup.classList.remove('popup_opened');
+//функция очистки ошибок и инпутов
+function reset() {
   document.querySelector('.popup__input-name-error').textContent = '';
   document.querySelector('.popup__input-about-error').textContent = '';
   popupName.classList.remove('popup__input_type_error');
   popupAbout.classList.remove('popup__input_type_error');
-  //снимаем слушатели на owerlay и esc
-  popup.removeEventListener('click', toClosePopupByClickOwerlay);
-  document.removeEventListener('keydown', toClosePopupByClickEsc);
-
+  document.querySelector('.popup__input-place-error').textContent = '';
+  document.querySelector('.popup__input-link-error').textContent = '';
+  inputPlace.classList.remove('popup__input_type_error');
+  inputLink.classList.remove('popup__input_type_error');
+  inputPlace.value = '';  //обнуляем
+  inputLink.value = '';   //обнуляем
 };
-closeButton.addEventListener('click', popupClose);
 
+//------------------------------------  Форма редактирования профиля -------------------------
 
+// открыть
+function openEditPopup(popup, formElement, popupButton, inactiveButtonClass) {
+  openPopup(popup);
+  handleFormInput(formElement, popupButton, inactiveButtonClass);
 
+  popupName.value = profileName.textContent;
+  popupAbout.value = profileAbout.textContent;
+};
+
+editButton.addEventListener('click', () => {
+  openEditPopup(popup, formElement, popupButton, obj.inactiveButtonClass)
+});
+
+// закрыть
+closeButton.addEventListener('click', () => {
+  closePopup(popup)
+});
+
+/* function closeEditPopup() {
+  closePopup(popup);
+};
+closeButton.addEventListener('click', () => {
+  closeEditPopup(popup)
+}); */
 
 // редактировать профиль
 function formSubmitHandler(evt) {
@@ -101,7 +129,8 @@ function formSubmitHandler(evt) {
 
   profileName.textContent = popupName.value;
   profileAbout.textContent = popupAbout.value;
-  popupClose();
+  closePopup(popup)
+  //closeEditPopup();
 };
 formElement.addEventListener('submit', formSubmitHandler);
 //--------------------------------------------------------------------------------------
@@ -117,7 +146,8 @@ function getCard(name, link) {
   const cardTemplate = itemCardTemplate.cloneNode(true);
   cardTemplate.querySelector('.card__title').textContent = name;
   cardTemplate.querySelector('.card__image').setAttribute('src', link);
-  cardTemplate.querySelector('.card__image').setAttribute('alt', name);
+  cardTemplate.querySelector('.card__image').setAttribute('alt', `Тут должна была быть фотография места: "${name}", но что-то пошло не так`);
+  cardTemplate.querySelector('.card__image').setAttribute('name', name);
 
   addTemplateEvent(cardTemplate); // вызываем функцию добавления слушателей лайк, удалить, фото
 
@@ -147,7 +177,7 @@ function addTemplateEvent(cardTemplate) {
   // слушатель фотографии
   cardTemplate.querySelector('.card__image').addEventListener('click', function (evt) {
     const imageInfo = evt.target;
-    popupImgOpened(imageInfo);
+    openImagePopup(popupImg, imageInfo);
   });
 };
 //-------------------------------------------------------------------------------------------
@@ -166,46 +196,24 @@ initialCards.forEach(renderCardTemplate)
 
 //------------------------------  Форма добавления карточек -----------------------------------------------------------
 
-//функция закрытия попап при клике на оверлае
-function toClosePopupAddByClickOwerlay(evt) {
-  if (evt.target.classList.contains('popup_opened')) {      //проверка клика на оверлее
-    popupAddClose();  //функция закрытия 
-  }
-};
-//функция закрытия попап при клике на esc
-function toClosePopupAddByClickEsc(evt) {
-  if (evt.key === 'Escape') {                         //проверка на эскейп
-    popupAddClose();
-  }
-};
 // открыть
-function popupAddOpened() {
-  popupAdd.classList.add('popup_opened');
-
-  //слушатель на закрытие кликом на оверлей
-  popupAdd.addEventListener('click', toClosePopupAddByClickOwerlay);
-
-  //слушатель на закрытие при нажатие esc
-  document.addEventListener('keydown', toClosePopupAddByClickEsc);
+function popupAddOpened(popupAdd, formAdd, popupButtonAdd, inactiveButtonClass) {
+  openPopup(popupAdd);
+  handleFormInput(formAdd, popupButtonAdd, inactiveButtonClass);
 };
-addButton.addEventListener('click', popupAddOpened);
+
+addButton.addEventListener('click', () => {
+  popupAddOpened(popupAdd, formAdd, popupButtonAdd, obj.inactiveButtonClass)
+});
 
 // закрыть
-function popupAddClose() {
-  popupAdd.classList.remove('popup_opened');
-  inputPlace.value = '';  //обнуляем
-  inputLink.value = '';   //обнуляем
-  document.querySelector('.popup__input-place-error').textContent = '';
-  document.querySelector('.popup__input-link-error').textContent = '';
-  inputPlace.classList.remove('popup__input_type_error');
-  inputLink.classList.remove('popup__input_type_error');
-  //снимаем слушатели на owerlay и esc
-  popupAdd.addEventListener('click', toClosePopupAddByClickOwerlay);
-  document.addEventListener('keydown', toClosePopupAddByClickEsc);
+function closeAddPopup(popupAdd) {
+  closePopup(popupAdd);
 };
-closeButtonPopupAdd.addEventListener('click', popupAddClose);
 
-
+closeButtonPopupAdd.addEventListener('click', () => {
+  closeAddPopup(popupAdd)
+});
 
 //добавить карточку через форму
 function renderCardUser(evt) {              // функция добавления карточки через форму
@@ -215,7 +223,7 @@ function renderCardUser(evt) {              // функция добавлени
   renderCard(cardTemplate, cardsContainer);                           //функция добавляет карточку
 
 
-  popupAddClose();  //закрываем форму
+  closeAddPopup(popupAdd);  //закрываем форму
 
 };
 
@@ -225,33 +233,21 @@ formAdd.addEventListener('submit', renderCardUser);     // слушатель ф
 //-------------------------------popup с картинкой-----------------------------------------------------------------------
 
 //открытие
-function popupImgOpened(item) {                     //функция открытия popup
-  popupImg.classList.add('popup_opened'); //добавляем класс "открытия" popup
-  const link = item.getAttribute('src');  //получаем ссылку кликнутой картинки
-  popupImgImage.setAttribute('src', link);  //передаем ссылку в popup с картинкой
+function openImagePopup(popupImg, imageInfo) {                     //функция открытия popup
+  openPopup(popupImg);                                        //открываем
+  const link = imageInfo.getAttribute('src');                     //получаем ссылку кликнутой картинки
+  popupImgImage.setAttribute('src', link);                    //передаем ссылку в popup с картинкой
 
-  const name = item.getAttribute('alt');    //получаем текст с атрибута alt
-  popupImgTitle.textContent = name;         //присваиваем title popup с картинкой текст с атрибута alt
+  const name = imageInfo.getAttribute('name');                 //получаем текст с атрибута alt
+  popupImgTitle.textContent = name;                         //присваиваем title popup с картинкой текст с атрибута alt
 }
 
 //закрытие
-function popupImgClose() {                              //функция закрытия popup
-  popupImg.classList.remove('popup_opened');    //удаляем класс "открытия" popup
+function closeImagePopup(popupImg) {                              //функция закрытия popup
+  closePopup(popupImg)                                      //закрываем
 };
-closeButtonPopupImg.addEventListener('click', popupImgClose); // вешаем слушатель на клик кнопки закрытия popup с картинкой
-
-//закрытие кликом на оверлей
-popupImg.addEventListener('click', (evt) => {     // вешаем слушатель на клик оверлей
-  if (evt.target.classList.contains('popup_type_img')) {      //проверка клика на оверлее
-    popupImgClose();  //функция закрытия 
-  }
-});
-
-//закрытие при нажатие esc
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    popupImgClose()
-  }
+closeButtonPopupImg.addEventListener('click', () => {       // вешаем слушатель на клик кнопки закрытия popup с картинкой
+  closeImagePopup(popupImg)
 });
 
 

@@ -48,6 +48,7 @@ function handleInput(inputElement, obj) {
 };
 //----------------------------функция управления кнопкой формы
 function handleFormInput(formElement, submitButton, inactiveButtonClass) {
+
   if (formElement.checkValidity()) {
     //форма валидна
     submitButton.classList.remove(inactiveButtonClass);
@@ -59,7 +60,6 @@ function handleFormInput(formElement, submitButton, inactiveButtonClass) {
   }
 
 };
-
 
 const obj = {
   formSelector: '.popup__form',
