@@ -53,7 +53,7 @@ const initialCards = [
 function closePopup(popup) {
 
   popup.classList.remove('popup_opened');
-  reset();
+  reset(popup);
   //снимаем слушатели на owerlay и esc
   popup.removeEventListener('mousedown', toClosePopupByClickOwerlay);
   document.removeEventListener('keydown', closeEventOnEscape);
@@ -83,17 +83,16 @@ function toClosePopupByClickEsc(evt, popup) {
   }
 };
 //функция очистки ошибок и инпутов
-function reset() {
-  document.querySelector('.popup__input-name-error').textContent = '';
-  document.querySelector('.popup__input-about-error').textContent = '';
-  popupName.classList.remove('popup__input_type_error');
-  popupAbout.classList.remove('popup__input_type_error');
-  document.querySelector('.popup__input-place-error').textContent = '';
-  document.querySelector('.popup__input-link-error').textContent = '';
-  inputPlace.classList.remove('popup__input_type_error');
-  inputLink.classList.remove('popup__input_type_error');
-  inputPlace.value = '';  //обнуляем
-  inputLink.value = '';   //обнуляем
+function reset(popup) {
+  const inputs = popup.querySelectorAll('.popup__input');
+  inputs.forEach(input => {
+    input.value = '';
+    input.classList.remove('popup__input_type_error');
+  });
+  const errors = popup.querySelectorAll('.popup__input-error');
+  errors.forEach(eror => {
+    eror.textContent = '';
+  })
 };
 
 //------------------------------------  Форма редактирования профиля -------------------------
@@ -116,13 +115,6 @@ closeButton.addEventListener('click', () => {
   closePopup(popup)
 });
 
-/* function closeEditPopup() {
-  closePopup(popup);
-};
-closeButton.addEventListener('click', () => {
-  closeEditPopup(popup)
-}); */
-
 // редактировать профиль
 function formSubmitHandler(evt) {
   evt.preventDefault();
@@ -130,7 +122,6 @@ function formSubmitHandler(evt) {
   profileName.textContent = popupName.value;
   profileAbout.textContent = popupAbout.value;
   closePopup(popup)
-  //closeEditPopup();
 };
 formElement.addEventListener('submit', formSubmitHandler);
 //--------------------------------------------------------------------------------------
