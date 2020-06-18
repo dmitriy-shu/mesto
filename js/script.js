@@ -197,22 +197,14 @@ initialCards.forEach(renderCardTemplate)
 //------------------------------  Форма добавления карточек -----------------------------------------------------------
 
 // открыть
-function popupAddOpened(popupAdd, formAdd, popupButtonAdd, inactiveButtonClass) {
-  openPopup(popupAdd);
-  handleFormInput(formAdd, popupButtonAdd, inactiveButtonClass);
-};
-
 addButton.addEventListener('click', () => {
-  popupAddOpened(popupAdd, formAdd, popupButtonAdd, obj.inactiveButtonClass)
+  openPopup(popupAdd);
+  handleFormInput(formAdd, popupButtonAdd, obj.inactiveButtonClass);
 });
 
 // закрыть
-function closeAddPopup(popupAdd) {
-  closePopup(popupAdd);
-};
-
 closeButtonPopupAdd.addEventListener('click', () => {
-  closeAddPopup(popupAdd)
+  closePopup(popupAdd);
 });
 
 //добавить карточку через форму
@@ -243,11 +235,8 @@ function openImagePopup(popupImg, imageInfo) {                     //функц�
 }
 
 //закрытие
-function closeImagePopup(popupImg) {                              //функция закрытия popup
-  closePopup(popupImg)                                      //закрываем
-};
 closeButtonPopupImg.addEventListener('click', () => {       // вешаем слушатель на клик кнопки закрытия popup с картинкой
-  closeImagePopup(popupImg)
+  closePopup(popupImg)
 });
 
 
