@@ -206,7 +206,7 @@ function renderCardUser(evt) {              // функция добавлени
   renderCard(cardTemplate, cardsContainer);                           //функция добавляет карточку
 
 
-  closeAddPopup(popupAdd);  //закрываем форму
+  closePopup(popupAdd);  //закрываем форму
 
 };
 
