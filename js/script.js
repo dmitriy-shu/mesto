@@ -230,6 +230,7 @@ closeButtonPopupImg.addEventListener('click', () => {       // вешаем сл
   closePopup(popupImg)
 });
 
+//-----------------------------------класс Card-------------------------------------------
 
 
 
