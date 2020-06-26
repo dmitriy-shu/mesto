@@ -100,7 +100,10 @@ function reset(popup) {
 // открыть
 function openEditPopup(popup, formElement, popupButton, inactiveButtonClass) {
   openPopup(popup);
-  handleFormInput(formElement, popupButton, inactiveButtonClass);
+  //handleFormInput(formElement, popupButton, inactiveButtonClass);
+  const formValidator = new FormValidator(obj, formElement);    //создаем экземпляр класса FormValidator
+  formValidator.enableValidation();                              //вызываем метод enableValidation() - включит валидацию
+  formValidator.handleFormInput(popupButton);                    //вызываем метод управления кнопкой (при открытие формы сразу проверяется валидность инпутов => управление кнопкой)
 
   popupName.value = profileName.textContent;
   popupAbout.value = profileAbout.textContent;
@@ -132,7 +135,73 @@ function renderCard(cardTemplate, cardsContainer) {
 }
 //---------------------------------------------------------------------------------------
 
-//----------------------------- функция создания карточки со слушателями-------------------------------
+//-----------------------------------класс Card-------------------------------------------
+
+class Card {
+  constructor(name, link, cardTemplate) {
+    this._name = name;
+    this._link = link;
+    this._cardTemplate = cardTemplate;
+  }
+
+  //метод копирования пустой карточки из шаблона
+  _getCardTemplate() {
+    const cardTemplate = document.querySelector(this._cardTemplate).content.querySelector('.card').cloneNode(true);
+
+    return cardTemplate;
+  }
+
+  //метод создания и заполнения пустой карточки
+  generateCard() {
+    this._cardTemplate = this._getCardTemplate();
+
+    this._cardTemplate.querySelector('.card__title').textContent = this._name;
+    this._cardTemplate.querySelector('.card__image').setAttribute('src', this._link);
+    this._cardTemplate.querySelector('.card__image').setAttribute('alt', `Тут должна была быть фотография места: "${this._name}", но что-то пошло не так`);
+    this._cardTemplate.querySelector('.card__image').setAttribute('name', this._name);
+
+    this._addTemplateEvent();
+
+    return this._cardTemplate;
+  }
+
+  //метод установки слушателей
+  _addTemplateEvent() {
+
+    // слушатель лайков
+    this._cardTemplate.querySelector('.card__button-like').addEventListener('click', () => {
+      this._toggleLike();
+    });
+
+    // слушатель корзины
+    this._cardTemplate.querySelector('.card__button-delet').addEventListener('click', () => {
+      this._deletCard();
+    });
+
+    // слушатель фотографии
+    this._cardTemplate.querySelector('.card__image').addEventListener('click', () => {
+      this._openCardImage();
+    });
+  };
+
+  //метод постановки/снятия лайка
+  _toggleLike() {
+    this._cardTemplate.querySelector('.card__button-like').classList.toggle('card__button-like_active')
+  }
+
+  //метод удаления карточки
+  _deletCard() {
+    this._cardTemplate.remove()
+  }
+
+  //метод открытия карты с увеличением
+  _openCardImage() {
+    const imageInfo = this._cardTemplate.querySelector('.card__image');
+    openImagePopup(popupImg, imageInfo);
+  }
+};
+
+/* //----------------------------- функция создания карточки со слушателями-------------------------------
 function getCard(name, link) {
   const cardTemplate = itemCardTemplate.cloneNode(true);
   cardTemplate.querySelector('.card__title').textContent = name;
@@ -171,18 +240,24 @@ function addTemplateEvent(cardTemplate) {
     openImagePopup(popupImg, imageInfo);
   });
 };
-//-------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------- */
 
 //----------------------------- добавить начальные карточки--------------------------------------------------------
-function renderCardTemplate(item) {
+initialCards.forEach((item) => {
+  const card = new Card(item.name, item.link, '.card-template');
+  const cardTemplate = card.generateCard();
+  renderCard(cardTemplate, cardsContainer);
+})
+
+/* function renderCardTemplate(item) {
   const name = item.name;
   const link = item.link;
-
+ 
   const cardTemplate = getCard(name, link);
   renderCard(cardTemplate, cardsContainer);
 };
-
-initialCards.forEach(renderCardTemplate)
+ 
+initialCards.forEach(renderCardTemplate) */
 //-----------------------------------------------------------------------------------------
 
 //------------------------------  Форма добавления карточек -----------------------------------------------------------
@@ -190,7 +265,10 @@ initialCards.forEach(renderCardTemplate)
 // открыть
 addButton.addEventListener('click', () => {
   openPopup(popupAdd);
-  handleFormInput(formAdd, popupButtonAdd, obj.inactiveButtonClass);
+  //handleFormInput(formAdd, popupButtonAdd, obj.inactiveButtonClass);
+  const formValidator = new FormValidator(obj, formAdd); //создаем экземпляр класса FormValidator
+  formValidator.enableValidation();                       //вызываем метод enableValidation() - включит валидацию
+  formValidator.handleFormInput();                        //вызываем метод управления кнопкой (при открытие формы сразу проверяется валидность инпутов => управление кнопкой)
 });
 
 // закрыть
@@ -202,8 +280,9 @@ closeButtonPopupAdd.addEventListener('click', () => {
 function renderCardUser(evt) {              // функция добавления карточки через форму
   evt.preventDefault();
 
-  const cardTemplate = getCard(inputPlace.value, inputLink.value);     //функция создать карточку
-  renderCard(cardTemplate, cardsContainer);                           //функция добавляет карточку
+  const card = new Card(inputPlace.value, inputLink.value, '.card-template');
+  const cardTemplate = card.generateCard()                                //метод создания карточки
+  renderCard(cardTemplate, cardsContainer);                           //функция добавляет карточку на страницу
 
 
   closePopup(popupAdd);  //закрываем форму
@@ -230,7 +309,83 @@ closeButtonPopupImg.addEventListener('click', () => {       // вешаем сл
   closePopup(popupImg)
 });
 
+
+
+/* //----------------------------- добавить начальные карточки--------------------------------------------------------
+initialCards.forEach((item) => {
+  const card = new Card(item.name, item.link, '.card-template');
+  const cardTemplate = card.generateCard();
+  renderCard(cardTemplate, cardsContainer);
+})
+
 //-----------------------------------класс Card-------------------------------------------
+
+class Card {
+  constructor(name, link, cardTemplate) {
+    this._name = name;
+    this._link = link;
+    this._cardTemplate = cardTemplate;
+  }
+
+  //метод копирования пустой карточки из шаблона
+  _getCardTemplate() {
+    const cardTemplate = document.querySelector(this._cardTemplate).content.querySelector('.card').cloneNode(true);
+
+    return cardTemplate;
+  }
+
+  //метод создания и заполнения пустой карточки
+  generateCard() {
+    this._cardTemplate = this._getCardTemplate();
+
+    this._cardTemplate.querySelector('.card__title').textContent = this._name;
+    this._cardTemplate.querySelector('.card__image').setAttribute('src', this._link);
+    this._cardTemplate.querySelector('.card__image').setAttribute('alt', `Тут должна была быть фотография места: "${this._name}", но что-то пошло не так`);
+    this._cardTemplate.querySelector('.card__image').setAttribute('name', this._name);
+
+    this._addTemplateEvent();
+
+    return this._cardTemplate;
+  }
+
+  //метод установки слушателей
+  _addTemplateEvent() {
+
+    // слушатель лайков
+    this._cardTemplate.querySelector('.card__button-like').addEventListener('click', () => {
+      this._toggleLike();
+    });
+
+    // слушатель корзины
+    this._cardTemplate.querySelector('.card__button-delet').addEventListener('click', () => {
+      this._deletCard();
+    });
+
+    // слушатель фотографии
+    this._cardTemplate.querySelector('.card__image').addEventListener('click', () => {
+      this._openCardImage();
+    });
+  };
+
+  //метод постановки/снятия лайка
+  _toggleLike() {
+    this._cardTemplate.querySelector('.card__button-like').classList.toggle('card__button-like_active')
+  }
+
+  //метод удаления карточки
+  _deletCard() {
+    this._cardTemplate.remove()
+  }
+
+  //метод открытия карты с увеличением
+  _openCardImage() {
+    const imageInfo = this._cardTemplate.querySelector('.card__image');
+    openImagePopup(popupImg, imageInfo);
+  }
+};
+ */
+
+
 
 
 
