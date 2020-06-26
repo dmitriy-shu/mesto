@@ -22,6 +22,14 @@ const popupButton = document.querySelector('.popup__button');
 const popupButtonAdd = document.querySelector('.popup__button_type_add')
 
 //----------------------------------- исходные данные начальных карточек
+const obj = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
 
 const initialCards = [
   {
@@ -98,9 +106,9 @@ function reset(popup) {
 //------------------------------------  Форма редактирования профиля -------------------------
 
 // открыть
-function openEditPopup(popup, formElement, popupButton, inactiveButtonClass) {
+function openEditPopup(popup, formElement, popupButton) {
   openPopup(popup);
-  //handleFormInput(formElement, popupButton, inactiveButtonClass);
+
   const formValidator = new FormValidator(obj, formElement);    //создаем экземпляр класса FormValidator
   formValidator.enableValidation();                              //вызываем метод enableValidation() - включит валидацию
   formValidator.handleFormInput(popupButton);                    //вызываем метод управления кнопкой (при открытие формы сразу проверяется валидность инпутов => управление кнопкой)
@@ -200,47 +208,7 @@ class Card {
     openImagePopup(popupImg, imageInfo);
   }
 };
-
-/* //----------------------------- функция создания карточки со слушателями-------------------------------
-function getCard(name, link) {
-  const cardTemplate = itemCardTemplate.cloneNode(true);
-  cardTemplate.querySelector('.card__title').textContent = name;
-  cardTemplate.querySelector('.card__image').setAttribute('src', link);
-  cardTemplate.querySelector('.card__image').setAttribute('alt', `Тут должна была быть фотография места: "${name}", но что-то пошло не так`);
-  cardTemplate.querySelector('.card__image').setAttribute('name', name);
-
-  addTemplateEvent(cardTemplate); // вызываем функцию добавления слушателей лайк, удалить, фото
-
-  return cardTemplate;
-}
-//--------------------------------------------------------------------------------------------
-
-//--------------------------------функция добавления слушателей в карточку--------------------
-function addTemplateEvent(cardTemplate) {
-  // слушатель лайков
-  const likeButton = cardTemplate.querySelector('.card__button-like');
-
-  likeButton.addEventListener('click', function (evt) {
-    const eventTargetLikeButton = evt.target;
-    eventTargetLikeButton.classList.toggle('card__button-like_active');
-  });
-
-  // слушатель корзины
-  const deletButton = cardTemplate.querySelector('.card__button-delet');
-
-  deletButton.addEventListener('click', function (evt) {
-    const eventTargetDeletButton = evt.target;
-    const parents = eventTargetDeletButton.closest('.card');
-    parents.remove();
-  });
-
-  // слушатель фотографии
-  cardTemplate.querySelector('.card__image').addEventListener('click', function (evt) {
-    const imageInfo = evt.target;
-    openImagePopup(popupImg, imageInfo);
-  });
-};
-//------------------------------------------------------------------------------------------- */
+//------------------------------------------------------------------------------------------- 
 
 //----------------------------- добавить начальные карточки--------------------------------------------------------
 initialCards.forEach((item) => {
@@ -248,16 +216,6 @@ initialCards.forEach((item) => {
   const cardTemplate = card.generateCard();
   renderCard(cardTemplate, cardsContainer);
 })
-
-/* function renderCardTemplate(item) {
-  const name = item.name;
-  const link = item.link;
- 
-  const cardTemplate = getCard(name, link);
-  renderCard(cardTemplate, cardsContainer);
-};
- 
-initialCards.forEach(renderCardTemplate) */
 //-----------------------------------------------------------------------------------------
 
 //------------------------------  Форма добавления карточек -----------------------------------------------------------
@@ -309,81 +267,6 @@ closeButtonPopupImg.addEventListener('click', () => {       // вешаем сл
   closePopup(popupImg)
 });
 
-
-
-/* //----------------------------- добавить начальные карточки--------------------------------------------------------
-initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link, '.card-template');
-  const cardTemplate = card.generateCard();
-  renderCard(cardTemplate, cardsContainer);
-})
-
-//-----------------------------------класс Card-------------------------------------------
-
-class Card {
-  constructor(name, link, cardTemplate) {
-    this._name = name;
-    this._link = link;
-    this._cardTemplate = cardTemplate;
-  }
-
-  //метод копирования пустой карточки из шаблона
-  _getCardTemplate() {
-    const cardTemplate = document.querySelector(this._cardTemplate).content.querySelector('.card').cloneNode(true);
-
-    return cardTemplate;
-  }
-
-  //метод создания и заполнения пустой карточки
-  generateCard() {
-    this._cardTemplate = this._getCardTemplate();
-
-    this._cardTemplate.querySelector('.card__title').textContent = this._name;
-    this._cardTemplate.querySelector('.card__image').setAttribute('src', this._link);
-    this._cardTemplate.querySelector('.card__image').setAttribute('alt', `Тут должна была быть фотография места: "${this._name}", но что-то пошло не так`);
-    this._cardTemplate.querySelector('.card__image').setAttribute('name', this._name);
-
-    this._addTemplateEvent();
-
-    return this._cardTemplate;
-  }
-
-  //метод установки слушателей
-  _addTemplateEvent() {
-
-    // слушатель лайков
-    this._cardTemplate.querySelector('.card__button-like').addEventListener('click', () => {
-      this._toggleLike();
-    });
-
-    // слушатель корзины
-    this._cardTemplate.querySelector('.card__button-delet').addEventListener('click', () => {
-      this._deletCard();
-    });
-
-    // слушатель фотографии
-    this._cardTemplate.querySelector('.card__image').addEventListener('click', () => {
-      this._openCardImage();
-    });
-  };
-
-  //метод постановки/снятия лайка
-  _toggleLike() {
-    this._cardTemplate.querySelector('.card__button-like').classList.toggle('card__button-like_active')
-  }
-
-  //метод удаления карточки
-  _deletCard() {
-    this._cardTemplate.remove()
-  }
-
-  //метод открытия карты с увеличением
-  _openCardImage() {
-    const imageInfo = this._cardTemplate.querySelector('.card__image');
-    openImagePopup(popupImg, imageInfo);
-  }
-};
- */
 
 
 
