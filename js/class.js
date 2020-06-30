@@ -1,6 +1,6 @@
-//-----------------------------------класс Card-------------------------------------------
+import { openImagePopup } from './index.js'
 
-export default class Card {
+export class Card {
   constructor(name, link, cardTemplate) {
     this._name = name;
     this._link = link;
@@ -42,7 +42,7 @@ export default class Card {
     });
 
     // слушатель фотографии
-    this._cardTemplate.querySelector('.card__image').addEventListener('click', () => {
+    this._cardTemplate.querySelector('.card__image').addEventListener('click', (evt) => {
       this._openCardImage();
     });
   };
@@ -60,7 +60,7 @@ export default class Card {
   //метод открытия карты с увеличением
   _openCardImage() {
     const imageInfo = this._cardTemplate.querySelector('.card__image');
-    openImagePopup(popupImg, imageInfo);
+    openImagePopup(imageInfo);
   }
 };
 //-------------------------------------------------------------------------------------------

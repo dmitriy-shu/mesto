@@ -1,3 +1,6 @@
+import { Card } from './class.js';
+import { FormValidator } from './validate.js';
+
 const editButton = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__title');
 const profileAbout = document.querySelector('.profile__subtitle');
@@ -59,12 +62,11 @@ const initialCards = [
 ];
 //-------------------------функция закрытия попапов
 function closePopup(popup) {
-
   popup.classList.remove('popup_opened');
   reset(popup);
   //снимаем слушатели на owerlay и esc
   popup.removeEventListener('mousedown', toClosePopupByClickOwerlay);
-  document.removeEventListener('keydown', closeEventOnEscape);
+  document.removeEventListener('keydown', toClosePopupByClickEsc);
 };
 //-------------------------функция открытия попапов
 function openPopup(popup) {
@@ -72,9 +74,7 @@ function openPopup(popup) {
   //слушатель на закрытие формы кликом на оверлей
   popup.addEventListener('mousedown', toClosePopupByClickOwerlay);
   //слушатель на закрытие формы при нажатие esc
-  document.addEventListener('keydown', closeEventOnEscape = (evt) => {
-    toClosePopupByClickEsc(evt, popup)
-  });
+  document.addEventListener('keydown', toClosePopupByClickEsc);
 };
 
 //функция закрытия попап при клике на оверлае
@@ -85,9 +85,10 @@ function toClosePopupByClickOwerlay(evt) {
   }
 };
 //функция закрытия попап при клике на esc
-function toClosePopupByClickEsc(evt, popup) {
+function toClosePopupByClickEsc(evt) {
   if (evt.key === 'Escape') {                         //проверка на эскейп
-    closePopup(popup);
+    const openedPopup = document.querySelector('.popup_opened')
+    closePopup(openedPopup)
   }
 };
 //функция очистки ошибок и инпутов
@@ -143,7 +144,7 @@ function renderCard(cardTemplate, cardsContainer) {
 }
 //---------------------------------------------------------------------------------------
 
-import Card from './class.js'
+
 //----------------------------- добавить начальные карточки--------------------------------------------------------
 initialCards.forEach((item) => {
   const card = new Card(item.name, item.link, '.card-template');
@@ -157,7 +158,6 @@ initialCards.forEach((item) => {
 // открыть
 addButton.addEventListener('click', () => {
   openPopup(popupAdd);
-  //handleFormInput(formAdd, popupButtonAdd, obj.inactiveButtonClass);
   const formValidator = new FormValidator(obj, formAdd); //создаем экземпляр класса FormValidator
   formValidator.enableValidation();                       //вызываем метод enableValidation() - включит валидацию
   formValidator.handleFormInput();                        //вызываем метод управления кнопкой (при открытие формы сразу проверяется валидность инпутов => управление кнопкой)
@@ -187,20 +187,21 @@ formAdd.addEventListener('submit', renderCardUser);     // слушатель ф
 //-------------------------------popup с картинкой-----------------------------------------------------------------------
 
 //открытие
-function openImagePopup(popupImg, imageInfo) {                     //функция открытия popup
-  openPopup(popupImg);                                        //открываем
+export function openImagePopup(imageInfo) {                     //функция открытия popup
+
   const link = imageInfo.getAttribute('src');                     //получаем ссылку кликнутой картинки
   popupImgImage.setAttribute('src', link);                    //передаем ссылку в popup с картинкой
 
   const name = imageInfo.getAttribute('name');                 //получаем текст с атрибута alt
   popupImgTitle.textContent = name;                         //присваиваем title popup с картинкой текст с атрибута alt
+
+  openPopup(popupImg);                                        //открываем
 }
 
 //закрытие
 closeButtonPopupImg.addEventListener('click', () => {       // вешаем слушатель на клик кнопки закрытия popup с картинкой
   closePopup(popupImg)
 });
-
 
 
 
