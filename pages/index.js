@@ -1,5 +1,5 @@
-import { Card } from './card.js';
-import { FormValidator } from './validate.js';
+import { Card } from '../components/card.js';
+import { FormValidator } from '../components/validate.js';
 
 const editButton = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__title');
