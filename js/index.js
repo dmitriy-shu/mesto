@@ -1,4 +1,4 @@
-import { Card } from './class.js';
+import { Card } from './card.js';
 import { FormValidator } from './validate.js';
 
 const editButton = document.querySelector('.profile__edit-button');
