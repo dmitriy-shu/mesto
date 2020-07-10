@@ -12,7 +12,6 @@ export class FormValidator {
 
     //находим все её импуты
     const inputElements = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-
     //для каждого импута
     inputElements.forEach(inputElement => {
       //добавляем слушатель на событие ввода с клавиатуры  
@@ -69,6 +68,18 @@ export class FormValidator {
       submitButton.classList.add(this._inactiveButtonClass);
       submitButton.setAttribute('disabled', true);
     }
+  };
+
+  //метод очистки ошибок и инпутов
+  reset() {
+    const inputs = this._formElement.querySelectorAll('.popup__input');
+    inputs.forEach(input => {
+      input.classList.remove('popup__input_type_error');
+    });
+    const errors = this._formElement.querySelectorAll('.popup__input-error');
+    errors.forEach(eror => {
+      eror.textContent = '';
+    })
   };
 }
 

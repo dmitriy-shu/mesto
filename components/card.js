@@ -1,10 +1,10 @@
-import { openImagePopup } from '../pages/index.js'
 
 export class Card {
-  constructor(name, link, cardTemplate) {
-    this._name = name;
-    this._link = link;
+  constructor({ initialCards, handleCardClick }, cardTemplate) {
+    this._name = initialCards.name;
+    this._link = initialCards.link;
     this._cardTemplate = cardTemplate;
+    this._handleCardClick = handleCardClick;
   }
 
   //метод копирования пустой карточки из шаблона
@@ -42,8 +42,8 @@ export class Card {
     });
 
     // слушатель фотографии
-    this._cardTemplate.querySelector('.card__image').addEventListener('click', (evt) => {
-      this._openCardImage();
+    this._cardTemplate.querySelector('.card__image').addEventListener('click', () => {
+      this._handleCardClick();
     });
   };
 
@@ -63,4 +63,4 @@ export class Card {
     openImagePopup(imageInfo);
   }
 };
-//-------------------------------------------------------------------------------------------
+
