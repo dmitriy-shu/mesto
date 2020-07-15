@@ -26,8 +26,8 @@ export class Popup {
   //метод закрытия попапа
   close() {
     this._popupSelector.classList.remove('popup_opened');
-    this._popupSelector.addEventListener('mousedown', this._handleOverlayClose);  //удаляем слушатель
-    document.addEventListener('keydown', this._handleEscClose);     //удаляем слушатель
+    this._popupSelector.removeEventListener('mousedown', this._handleOverlayClose);  //удаляем слушатель
+    document.removeEventListener('keydown', this._handleEscClose);     //удаляем слушатель
   }
 
   //метод добавления слушателя на кнопку закрыть

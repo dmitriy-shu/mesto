@@ -12,6 +12,6 @@
 }
 
 .card__button-delet:hover {
-  opacity: 70%;
+  opacity: .3;
   transition: opacity 0.2s ease-in;
 }

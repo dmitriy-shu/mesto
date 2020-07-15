@@ -19,17 +19,20 @@ export class Card {
     this._cardTemplate = this._getCardTemplate();
 
     this._cardTemplate.querySelector('.card__title').textContent = this._name;
-    this._cardTemplate.querySelector('.card__image').setAttribute('src', this._link);
-    this._cardTemplate.querySelector('.card__image').setAttribute('alt', `Тут должна была быть фотография места: "${this._name}", но что-то пошло не так`);
-    this._cardTemplate.querySelector('.card__image').setAttribute('name', this._name);
 
-    this._addTemplateEvent();
+    const cardImage = this._cardTemplate.querySelector('.card__image');
+
+    cardImage.setAttribute('src', this._link);
+    cardImage.setAttribute('alt', `Тут должна была быть фотография места: "${this._name}", но что-то пошло не так`);
+    cardImage.setAttribute('name', this._name);
+
+    this._setEventListeners();
 
     return this._cardTemplate;
   }
 
   //метод установки слушателей
-  _addTemplateEvent() {
+  _setEventListeners() {
 
     // слушатель лайков
     this._cardTemplate.querySelector('.card__button-like').addEventListener('click', () => {
@@ -43,7 +46,7 @@ export class Card {
 
     // слушатель фотографии
     this._cardTemplate.querySelector('.card__image').addEventListener('click', () => {
-      this._handleCardClick();
+      this._handleCardClick(this._name, this._link);
     });
   };
 
@@ -57,10 +60,5 @@ export class Card {
     this._cardTemplate.remove()
   }
 
-  //метод открытия карты с увеличением
-  _openCardImage() {
-    const imageInfo = this._cardTemplate.querySelector('.card__image');
-    openImagePopup(imageInfo);
-  }
 };
 

@@ -10,6 +10,6 @@
 }
 
 .popup__button_disabled:hover {
-  opacity: 100%;
+  opacity: 1;
 }
 
