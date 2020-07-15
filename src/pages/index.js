@@ -1,11 +1,11 @@
-import './pages/index.css';
+import './index.css';
 
-import { Card } from './components/card.js';
-import { FormValidator } from './components/validate.js';
-import { Section } from './components/section.js';
-import { UserInfo } from './components/userInfo.js';
-import { PopupWithImage } from './components/popupWithImage.js';
-import { PopupWithForm } from './components/popupWithForm.js';
+import { Card } from '../components/card.js';
+import { FormValidator } from '../components/validate.js';
+import { Section } from '../components/section.js';
+import { UserInfo } from '../components/userInfo.js';
+import { PopupWithImage } from '../components/popupWithImage.js';
+import { PopupWithForm } from '../components/popupWithForm.js';
 import {
   initialCards,
   obj,
@@ -22,7 +22,7 @@ import {
   formAdd,
   cardsContainer,
   popupButton
-} from './utils/constants.js';
+} from '../utils/constants.js';
 
 //---------------------------------------editPopup------------------------------------
 
