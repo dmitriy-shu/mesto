@@ -1,0 +1,8 @@
+.card__counter-like {
+  width: 9px;
+  height: 13px;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #000;
+  margin: 3px auto 0px;
+}

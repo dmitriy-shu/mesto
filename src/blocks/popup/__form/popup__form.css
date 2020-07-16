@@ -1,7 +1,6 @@
 .popup__form {
   box-sizing: border-box;
-  max-width: 430px;
-  min-height: 330px;
+  width: 430px;
   background-color: #ffffff;
   margin: auto;
   padding: 36px 36px 34px;
