@@ -10,9 +10,9 @@ export class FormValidator {
   //---------------------------метод запуска валидации
   enableValidation() {
 
+
     //находим все её импуты
     const inputElements = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    //для каждого импута
     inputElements.forEach(inputElement => {
       //добавляем слушатель на событие ввода с клавиатуры  
       inputElement.addEventListener('input', () => this._handleInput(inputElement))
@@ -58,7 +58,6 @@ export class FormValidator {
   handleFormInput() {
     //находим кнопки(сабмит)
     const submitButton = this._formElement.querySelector(this._submitButtonSelector);
-
     if (this._formElement.checkValidity()) {
       //форма валидна
       submitButton.classList.remove(this._inactiveButtonClass);

@@ -37,18 +37,24 @@ export const obj = {
 export const popup = document.querySelector('.popup');              //popupEdit
 export const popupAdd = document.querySelector('.popup_type_add');  //popupAdd
 export const popupImg = document.querySelector('.popup_type_img');  //popupImage
+export const popupDelete = document.querySelector('.popup_type_delet');  //popupDelet
+export const popupAvatar = document.querySelector('.popup_type_edit-avatar');  //popupEditAvatar
+
 
 export const profileName = document.querySelector('.profile__title');   // имя пользователя в профайле
 export const profileAbout = document.querySelector('.profile__subtitle'); // "о себе" пользователя в профайле
+export const profileAvatar = document.querySelector('.profile__avatar'); //аватар профиля
 
 export const editButton = document.querySelector('.profile__edit-button');  //кнопка открытия формы редактирования профиля popupEdit
 export const addButton = document.querySelector('.profile__add-button');    //кнопка открытия формы добавления новой карточки popupAdd
+export const editAvatarButton = document.querySelector('.profile__edit-button-avatar'); //кнопка открытия формы добавления картинки аватара
 
 export const popupName = document.querySelector('.popup__input_type_name');   //поля ввода имени пользователя
 export const popupAbout = document.querySelector('.popup__input_type_about');   //поля ввода "о себе"
 
 export const formElement = document.querySelector('.popup__form');        //форма popupEdit
 export const formAdd = document.querySelector('.popup__form_type_add');   //форма popupAdd
+export const formAvatar = document.querySelector('.popup__form_edit-avatar');   //форма popupAvatar
 
 export const cardsContainer = document.querySelector('.card-grid'); //контейнер для карточек
 
