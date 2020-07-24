@@ -10,7 +10,6 @@ export class FormValidator {
   //---------------------------метод запуска валидации
   enableValidation() {
 
-
     //находим все её импуты
     const inputElements = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     inputElements.forEach(inputElement => {

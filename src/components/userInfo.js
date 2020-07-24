@@ -24,7 +24,6 @@ export class UserInfo {
 
   //метод установки картинки аватара
   setUserAvatar(data) {
-    console.log(this._profileAvatar)
     this._profileAvatar.src = data.avatar;
   }
 

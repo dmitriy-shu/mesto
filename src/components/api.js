@@ -36,9 +36,8 @@ export class Api {
     })
   }
 
-  //метод обновления аватара
+  //метод добавления нового аватара
   sendUserAvatar(avatar) {
-    console.log(avatar.avatar)
     return this._sendRequest(`/users/me/avatar`, {
       method: 'PATCH',
       body: JSON.stringify({ avatar: avatar.avatar }),
