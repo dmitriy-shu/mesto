@@ -87,11 +87,12 @@ export class Card {
   }
 
   //метод удаления карточки
-  deletCard() {
-    this._cardTemplate.remove()
+  delete() {
+    this._cardTemplate.remove();
+    this._cardTemplate = null;
   }
 
-};
+}
 
 
 

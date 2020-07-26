@@ -109,7 +109,7 @@ Promise.all([api.getUserInfo(), api.getCards()])
             popupWithDelete.setHandleSubmit(() => {
               api.deleteCard(data._id)
                 .then(() => {
-                  card.deletCard();
+                  card.delete();
                 })
                 .catch((err) => {
                   console.log(err)
@@ -163,7 +163,7 @@ Promise.all([api.getUserInfo(), api.getCards()])
                 popupWithDelete.setHandleSubmit(() => {
                   api.deleteCard(data._id)
                     .then(() => {
-                      card.deletCard();
+                      card.delete();
                     })
                     .catch((err) => {
                       console.log(err)
